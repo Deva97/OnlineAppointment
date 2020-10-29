@@ -1,0 +1,33 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onlineappointment-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: OnlineAppointment
+  template:
+    metadata:
+      labels:
+        app: OnlineAppointment
+    spec:
+      containers:
+      - name: OnlineAppointmentRepos
+        image: dnazureacr.azurecr.io/OnlineAppointmentRepos:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: dsconfigsn
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: OnlineAppointment
+spec:
+  type: OnlineAppointment
+  ports:
+  - port: 80
+  selector:
+    app: OnlineAppointment 
